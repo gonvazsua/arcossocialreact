@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RestrictedRoute from "./components/RestrictedRoute/RestrictedRoute";
-import MainModule from "./pages/MainModule/MainModule.test";
+import MainModule from "./pages/MainModule/MainModule";
 
 function App() {
     return (
