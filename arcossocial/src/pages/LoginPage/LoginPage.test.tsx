@@ -32,20 +32,35 @@ describe('LoginPage', () => {
 
     });
 
-    test.skip('should redirect to main page when login is success', async () => {
+    test('should redirect to main page when login is success', async () => {
         renderComponent();
 
         const usernameInput = screen.getByRole('textbox', {name:'Usuario'});
-
         userEvent.type(usernameInput, 'test');
         const passwordInput = screen.getByRole('textbox', {name:'Contraseña'});
-
         userEvent.type(passwordInput, 'test');
 
         const loginButton = screen.getByRole('button', { name: 'LOGIN'});
         userEvent.click(loginButton);
 
-        await waitFor(() => expect(history.location.pathname).toBe('main'));
+        await waitFor(() => expect(history.location.pathname).toBe('/main'));
+    });
 
+    test('should show error message when login is not success', async () => {
+        renderComponent();
+
+        const initAlert = screen.queryAllByText(/Usuario o contraseña incorrectos/i );
+        expect(initAlert).toHaveLength(0);
+
+        const usernameInput = screen.getByRole('textbox', {name:'Usuario'});
+        userEvent.type(usernameInput, 'nonExistingUser');
+        const passwordInput = screen.getByRole('textbox', {name:'Contraseña'});
+        userEvent.type(passwordInput, 'incorrect password');
+
+        const loginButton = screen.getByRole('button', { name: 'LOGIN'});
+        userEvent.click(loginButton);
+
+        const alert = await screen.findAllByText(/Usuario o contraseña incorrectos/i);
+        expect(alert).toHaveLength(1);
     });
 });
