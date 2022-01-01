@@ -1,1 +1,1 @@
-export const endpointBaseUrl = 'http://localhost:3030';
+export const endpointBaseUrl = 'http://localhost:8080';

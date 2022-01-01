@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import RestrictedRoute from "./components/RestrictedRoute/RestrictedRoute";
+import MainPage from './pages/MainPage/MainPage';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <Switch>
+                <RestrictedRoute path={'/main'} component={MainPage}/>
+                <Route exact path="/">
+                    <div>
+                        <LoginPage/>
+                    </div>
+                </Route>
+            </Switch>
+        </Router>
+    );
 }
 
 export default App;

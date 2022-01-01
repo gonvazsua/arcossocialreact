@@ -50,7 +50,7 @@ export default function LoginPage (): JSX.Element {
             <TextField id="username" label="Usuario" value={username} variant="outlined" onChange={(event) => handleChangeUsername(event.target.value)}/>
             <TextField id="password" label="Contraseña" value={password} variant="outlined" onChange={(event) => handleChangePassword(event.target.value)}/>
             <FormButton disabled={loginButtonDisabled} onClickFormButton={() => {handleClickLogin()}} displayText={'LOGIN'} />
-            <Snackbar open={loginIncorrect} autoHideDuration={6000}>
+            <Snackbar open={loginIncorrect} autoHideDuration={1000}>
                 <Alert severity="error">
                     Usuario o contraseña incorrectos
                 </Alert>

@@ -11,7 +11,7 @@ export default function FormButton (props: FormButtonProps): JSX.Element {
     const { disabled, onClickFormButton, displayText } = props;
 
     return (
-        <Button disabled={disabled} onClick={() => onClickFormButton()}>
+        <Button variant={'contained'} disabled={disabled} onClick={() => onClickFormButton()}>
             {displayText}
         </Button>
     );
