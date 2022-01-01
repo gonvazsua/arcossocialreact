@@ -4,17 +4,16 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
 } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RestrictedRoute from "./components/RestrictedRoute/RestrictedRoute";
-import MainPage from './pages/MainPage/MainPage';
+import MainModule from "./pages/MainModule/MainModule.test";
 
 function App() {
     return (
         <Router>
             <Switch>
-                <RestrictedRoute path={'/main'} component={MainPage}/>
+                <RestrictedRoute path={'/main'} component={MainModule}/>
                 <Route exact path="/">
                     <div>
                         <LoginPage/>

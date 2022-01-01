@@ -38,7 +38,7 @@ describe('LoginPage', () => {
 
     });
 
-    test('should redirect to main page when login is success', async () => {
+    test('should redirect to main module when login is success', async () => {
         renderComponent();
 
         const usernameInput = screen.getByRole('textbox', {name:'Usuario'});
@@ -70,7 +70,7 @@ describe('LoginPage', () => {
         expect(alert).toHaveLength(1);
     });
 
-    test.skip('should redirect to Main Page if the user is logged', () => {
+    test.skip('should redirect to Restricted module if the user is logged', () => {
         jest.spyOn(localStorage, 'getItem');
         renderComponent();
 
