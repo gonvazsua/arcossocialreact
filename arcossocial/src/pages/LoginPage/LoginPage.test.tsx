@@ -3,6 +3,7 @@ import LoginPage from "./LoginPage";
 import userEvent from "@testing-library/user-event";
 import {Router} from "react-router";
 import { createBrowserHistory } from 'history';
+import React from "react";
 
 describe('LoginPage', () => {
 
@@ -15,6 +16,11 @@ describe('LoginPage', () => {
             </Router>
         );
     };
+
+    afterEach(() => {
+        localStorage.clear();
+        jest.restoreAllMocks();
+    });
 
     test('should enable login button when username and password are filled', () => {
         renderComponent();
@@ -62,5 +68,12 @@ describe('LoginPage', () => {
 
         const alert = await screen.findAllByText(/Usuario o contraseña incorrectos/i);
         expect(alert).toHaveLength(1);
+    });
+
+    test.skip('should redirect to Main Page if the user is logged', () => {
+        jest.spyOn(localStorage, 'getItem');
+        renderComponent();
+
+        expect(history.location.pathname).toBe('/main');
     });
 });

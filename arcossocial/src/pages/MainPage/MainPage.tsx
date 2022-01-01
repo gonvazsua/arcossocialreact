@@ -1,3 +1,3 @@
 export default function MainPage(): JSX.Element {
-  return <div />
+  return <div>Main works</div>
 };

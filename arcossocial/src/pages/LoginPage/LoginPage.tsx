@@ -3,7 +3,8 @@ import {useState} from "react";
 import FormButton from "../../components/FormButton/FormButton";
 import {AxiosResponse} from "axios";
 import {executeLogin, LoginResponse} from "../../api/login/login";
-import {useHistory} from "react-router";
+import {Redirect, useHistory} from "react-router";
+import {LocalStorageKey} from "../../util/localStorageKey";
 
 export default function LoginPage (): JSX.Element {
 
@@ -35,7 +36,7 @@ export default function LoginPage (): JSX.Element {
         try {
             const response: AxiosResponse<LoginResponse> = await executeLogin(username, password);
             if(response.status === 200) {
-                localStorage.setItem('arcossocial-token', response.data.token);
+                localStorage.setItem(LocalStorageKey.TOKEN, response.data.token);
                 history.push('/main');
             } else {
                 setLoginIncorrect(true);
@@ -44,17 +45,28 @@ export default function LoginPage (): JSX.Element {
             setLoginIncorrect(true);
         }
     };
+    
+    const getLoginPage = () => {
+        return (
+            <div>
+                <TextField id="username" label="Usuario" value={username} variant="outlined" onChange={(event) => handleChangeUsername(event.target.value)}/>
+                <TextField id="password" label="Contraseña" value={password} variant="outlined" onChange={(event) => handleChangePassword(event.target.value)}/>
+                <FormButton disabled={loginButtonDisabled} onClickFormButton={() => {handleClickLogin()}} displayText={'LOGIN'} />
+                <Snackbar open={loginIncorrect} autoHideDuration={1000}>
+                    <Alert severity="error">
+                        Usuario o contraseña incorrectos
+                    </Alert>
+                </Snackbar>
+            </div>
+        );
+    };
 
-    return (
-        <div>
-            <TextField id="username" label="Usuario" value={username} variant="outlined" onChange={(event) => handleChangeUsername(event.target.value)}/>
-            <TextField id="password" label="Contraseña" value={password} variant="outlined" onChange={(event) => handleChangePassword(event.target.value)}/>
-            <FormButton disabled={loginButtonDisabled} onClickFormButton={() => {handleClickLogin()}} displayText={'LOGIN'} />
-            <Snackbar open={loginIncorrect} autoHideDuration={1000}>
-                <Alert severity="error">
-                    Usuario o contraseña incorrectos
-                </Alert>
-            </Snackbar>
-        </div>
-    );
+    const isLoggedIn = () => {
+        const authToken = localStorage.getItem(LocalStorageKey.TOKEN);
+        return authToken || false;
+    };
+
+    return isLoggedIn()
+        ? <Redirect to={{ pathname: '/main' }} />
+        : getLoginPage();
 };
