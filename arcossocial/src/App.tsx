@@ -15,9 +15,7 @@ function App() {
             <Switch>
                 <RestrictedRoute path={'/main'} component={MainModule}/>
                 <Route exact path="/">
-                    <div>
-                        <LoginPage/>
-                    </div>
+                    <LoginPage/>
                 </Route>
             </Switch>
         </Router>
