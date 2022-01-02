@@ -2,14 +2,15 @@ import {Route, Switch, useRouteMatch} from "react-router-dom";
 import {Redirect} from "react-router";
 import React from "react";
 import HelpsPage from "./HelpsPage/HelpsPage";
+import MenuBar from "../../components/MenuBar/MenuBar";
 
 export default function MainModule() {
 
-    const { path, url } = useRouteMatch();
+    const { path } = useRouteMatch();
 
     return (
         <div>
-            <div>Header</div>
+            <MenuBar />
             <Switch>
                 <Route path={`${path}/helps`}>
                     <HelpsPage />
