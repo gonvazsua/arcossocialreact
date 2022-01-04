@@ -11,7 +11,7 @@ interface LoginRequest {
 }
 
 export async function executeLogin(username: string, password: string): Promise<AxiosResponse<LoginResponse>> {
-    const loginRequest = {
+    const loginRequest: LoginRequest = {
         username, password
     };
     return await axios.post(`${endpointBaseUrl}/auth/login`, loginRequest);
