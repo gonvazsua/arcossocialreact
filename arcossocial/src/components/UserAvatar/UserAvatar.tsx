@@ -10,6 +10,7 @@ export default function UserAvatar(): JSX.Element {
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -25,7 +26,9 @@ export default function UserAvatar(): JSX.Element {
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>T</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>
+              T
+            </Avatar>
           </IconButton>
         </Tooltip>
         <Menu

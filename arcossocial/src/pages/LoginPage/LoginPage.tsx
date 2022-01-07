@@ -37,6 +37,8 @@ export default function LoginPage (): JSX.Element {
             const response: AxiosResponse<LoginResponse> = await executeLogin(username, password);
             if(response.status === 200) {
                 localStorage.setItem(LocalStorageKey.TOKEN, response.data.token);
+                localStorage.setItem(LocalStorageKey.USER_CODE, username);
+                localStorage.setItem(LocalStorageKey.PASSWORD, password);
                 history.push('/main');
             } else {
                 setLoginIncorrect(true);

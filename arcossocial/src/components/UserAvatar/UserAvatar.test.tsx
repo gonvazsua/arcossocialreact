@@ -5,7 +5,9 @@ import userEvent from "@testing-library/user-event";
 describe('UserAvatar', function () {
 
     const renderComponent = () => {
-        return render(<UserAvatar />);
+        return render(
+            <UserAvatar />
+        );
     };
 
     test('should render menu when clicking on the first letter of the user name button', () => {
@@ -20,6 +22,12 @@ describe('UserAvatar', function () {
 
         expect(myAccountLink).toBeInTheDocument();
         expect(logoutLink).toBeInTheDocument();
+    });
+
+    test.skip('should show initial of user in the avatar', () => {
+        localStorage.clear();
+        renderComponent();
+        //expect(history.location.pathname).toBe('/');
     });
 
 });

@@ -5,7 +5,7 @@ export interface User {
     creationDate: Date;
     entityCode: string;
     fullName: string;
-    isActive: true
+    isActive: boolean;
     isAdmin: boolean;
     password: string;
     userCode: string;
