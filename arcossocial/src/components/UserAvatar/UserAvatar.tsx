@@ -5,13 +5,17 @@ import {useRecoilValue, useResetRecoilState} from "recoil";
 import {loggedUserAtom} from "../../api/user/UserAtom";
 import {useHistory} from "react-router";
 
-export default function UserAvatar(): JSX.Element {
+export interface UserAvatarProps {
+  logoutHandler: () => void,
+  myAccountHandler: () => void
+}
 
+export default function UserAvatar(props: UserAvatarProps): JSX.Element {
+
+  const { logoutHandler, myAccountHandler } = props;
   const [anchorEl, setAnchorEl] = useState(null);
   const loggedUser = useRecoilValue(loggedUserAtom);
-  const resetLoggedUser = useResetRecoilState(loggedUserAtom);
   const open = Boolean(anchorEl);
-  const history = useHistory();
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -23,11 +27,6 @@ export default function UserAvatar(): JSX.Element {
 
   const getLoggedUserInitial = (): string | undefined => {
     return loggedUser?.fullName?.charAt(0);
-  };
-
-  const logout = () => {
-    resetLoggedUser();
-    history.push('/');
   };
 
   return (
@@ -81,10 +80,10 @@ export default function UserAvatar(): JSX.Element {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <MenuItem>
+          <MenuItem onClick={myAccountHandler}>
             <Avatar /> Mi cuenta
           </MenuItem>
-          <MenuItem onClick={() => logout()}>
+          <MenuItem onClick={logoutHandler}>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>

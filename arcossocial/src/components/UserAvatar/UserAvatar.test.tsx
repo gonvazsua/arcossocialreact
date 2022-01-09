@@ -10,6 +10,9 @@ import {createBrowserHistory} from "history";
 
 describe('UserAvatar', function () {
 
+    const logoutHandler = jest.fn();
+    const myAccountHandler = jest.fn();
+
     const loggedUser: User = mockData.loggedUser[0];
     const history = createBrowserHistory();
 
@@ -18,7 +21,7 @@ describe('UserAvatar', function () {
             <RecoilRoot initializeState={(snap) => {
                 snap.set(loggedUserAtom, loggedUser)
             }}>
-                <UserAvatar />
+                <UserAvatar logoutHandler={logoutHandler} myAccountHandler={myAccountHandler} />
             </RecoilRoot>
         );
     };
@@ -29,7 +32,7 @@ describe('UserAvatar', function () {
                 snap.set(loggedUserAtom, loggedUser)
             }}>
                 <Router history={history}>
-                    <UserAvatar />
+                    <UserAvatar logoutHandler={logoutHandler} myAccountHandler={myAccountHandler} />
                 </Router>
             </RecoilRoot>
         );
@@ -58,7 +61,7 @@ describe('UserAvatar', function () {
         expect(profileButton.textContent).toBe(expectedInitial);
     });
 
-    test('should redirect to login page when logout', async () => {
+    test('should call to logout handler when clicking on logout button', async () => {
         renderComponentWithRouter();
 
         const accountButton = screen.getByRole('button', {name: 'Mi cuenta'});
@@ -67,9 +70,19 @@ describe('UserAvatar', function () {
         const logoutButton = screen.getByRole('menuitem', { name: /desconectar/i});
         userEvent.click(logoutButton);
 
-        await waitFor(() => expect(logoutButton).not.toBeInTheDocument());
+        expect(logoutHandler).toHaveBeenCalled();
+    });
 
-        await waitFor(() => expect(history.location.pathname).toBe('/'));
+    test('should call to my account handler when clicking on my account button', async () => {
+        renderComponentWithRouter();
+
+        const accountButton = screen.getByRole('button', {name: 'Mi cuenta'});
+        userEvent.click(accountButton);
+
+        const myAccountLink = screen.getByRole('menuitem', {name: 'Mi cuenta'});
+        userEvent.click(myAccountLink);
+
+        expect(myAccountHandler).toHaveBeenCalled();
     });
 
 });
