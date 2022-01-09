@@ -1,10 +1,13 @@
 import {Avatar, IconButton, ListItemIcon, Menu, MenuItem, Tooltip} from "@mui/material";
 import {useState} from "react";
 import Logout from '@mui/icons-material/Logout';
+import {useRecoilValue} from "recoil";
+import {loggedUserAtom} from "../../api/user/UserAtom";
 
 export default function UserAvatar(): JSX.Element {
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const loggedUser = useRecoilValue(loggedUserAtom);
   const open = Boolean(anchorEl);
 
   const handleClick = (event: any) => {
@@ -13,6 +16,10 @@ export default function UserAvatar(): JSX.Element {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const getLoggedUserInitial = (): string | undefined => {
+    return loggedUser?.fullName?.charAt(0);
   };
 
   return (
@@ -27,7 +34,7 @@ export default function UserAvatar(): JSX.Element {
               aria-expanded={open ? 'true' : undefined}
           >
             <Avatar sx={{ width: 32, height: 32 }}>
-              T
+              { getLoggedUserInitial() }
             </Avatar>
           </IconButton>
         </Tooltip>

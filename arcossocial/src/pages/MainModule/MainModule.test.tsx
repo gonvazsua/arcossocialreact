@@ -3,6 +3,7 @@ import MainModule from "./MainModule";
 import {Router} from "react-router";
 import {createBrowserHistory} from "history";
 import {useLoggedUser} from "../../api/user/UserHooks";
+import {RecoilRoot} from "recoil";
 
 jest.mock('../../api/user/UserHooks');
 describe('MainModule', () => {
@@ -11,9 +12,11 @@ describe('MainModule', () => {
 
     const renderComponent = () => {
         return render(
-            <Router history={history}>
-                <MainModule />
-            </Router>
+            <RecoilRoot>
+                <Router history={history}>
+                    <MainModule />
+                </Router>
+            </RecoilRoot>
         );
     };
 

@@ -36,6 +36,11 @@ describe('UserAvatar', function () {
 
     test('should render the inital letter of the logged user name', () => {
         renderComponent();
+        const expectedInitial = mockData.loggedUser[0].fullName.charAt(0);
+        const profileButton = screen.getByRole('button', {
+            name: /mi cuenta/i
+        });
+        expect(profileButton.textContent).toBe(expectedInitial);
     });
 
 });

@@ -11,9 +11,11 @@ describe('MenuBar', () => {
 
     test('should render menu links and user avatar', () => {
         render(
-            <Router history={history}>
-                <MenuBar />
-            </Router>
+            <RecoilRoot>
+                <Router history={history}>
+                    <MenuBar />
+                </Router>
+            </RecoilRoot>
         );
 
         const helpsMenu = screen.getByRole('link', { name: 'Ayudas'});

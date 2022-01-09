@@ -8,17 +8,20 @@ import {
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RestrictedRoute from "./components/RestrictedRoute/RestrictedRoute";
 import MainModule from "./pages/MainModule/MainModule";
+import {RecoilRoot} from "recoil";
 
 function App() {
     return (
-        <Router>
-            <Switch>
-                <RestrictedRoute path={'/main'} component={MainModule}/>
-                <Route exact path="/">
-                    <LoginPage/>
-                </Route>
-            </Switch>
-        </Router>
+        <RecoilRoot>
+            <Router>
+                <Switch>
+                    <RestrictedRoute path={'/main'} component={MainModule}/>
+                    <Route exact path="/">
+                        <LoginPage/>
+                    </Route>
+                </Switch>
+            </Router>
+        </RecoilRoot>
     );
 }
 
