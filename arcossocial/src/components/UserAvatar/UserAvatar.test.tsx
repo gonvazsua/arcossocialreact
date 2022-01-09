@@ -1,14 +1,17 @@
-import {render, screen} from "@testing-library/react";
+import {render, screen, waitFor} from "@testing-library/react";
 import UserAvatar from "./UserAvatar";
 import userEvent from "@testing-library/user-event";
 import {RecoilRoot} from "recoil";
 import {loggedUserAtom} from "../../api/user/UserAtom";
 import {mockData} from "../../mocks/mockData";
 import {User} from "../../api/user/user";
+import {Router} from "react-router";
+import {createBrowserHistory} from "history";
 
 describe('UserAvatar', function () {
 
     const loggedUser: User = mockData.loggedUser[0];
+    const history = createBrowserHistory();
 
     const renderComponent = () => {
         return render(
@@ -16,6 +19,18 @@ describe('UserAvatar', function () {
                 snap.set(loggedUserAtom, loggedUser)
             }}>
                 <UserAvatar />
+            </RecoilRoot>
+        );
+    };
+
+    const renderComponentWithRouter = () => {
+        return render(
+            <RecoilRoot initializeState={(snap) => {
+                snap.set(loggedUserAtom, loggedUser)
+            }}>
+                <Router history={history}>
+                    <UserAvatar />
+                </Router>
             </RecoilRoot>
         );
     };
@@ -41,6 +56,20 @@ describe('UserAvatar', function () {
             name: /mi cuenta/i
         });
         expect(profileButton.textContent).toBe(expectedInitial);
+    });
+
+    test('should redirect to login page when logout', async () => {
+        renderComponentWithRouter();
+
+        const accountButton = screen.getByRole('button', {name: 'Mi cuenta'});
+        userEvent.click(accountButton);
+
+        const logoutButton = screen.getByRole('menuitem', { name: /desconectar/i});
+        userEvent.click(logoutButton);
+
+        await waitFor(() => expect(logoutButton).not.toBeInTheDocument());
+
+        await waitFor(() => expect(history.location.pathname).toBe('/'));
     });
 
 });

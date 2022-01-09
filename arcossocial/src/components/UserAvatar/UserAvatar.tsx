@@ -1,14 +1,17 @@
 import {Avatar, IconButton, ListItemIcon, Menu, MenuItem, Tooltip} from "@mui/material";
 import {useState} from "react";
 import Logout from '@mui/icons-material/Logout';
-import {useRecoilValue} from "recoil";
+import {useRecoilValue, useResetRecoilState} from "recoil";
 import {loggedUserAtom} from "../../api/user/UserAtom";
+import {useHistory} from "react-router";
 
 export default function UserAvatar(): JSX.Element {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const loggedUser = useRecoilValue(loggedUserAtom);
+  const resetLoggedUser = useResetRecoilState(loggedUserAtom);
   const open = Boolean(anchorEl);
+  const history = useHistory();
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -20,6 +23,11 @@ export default function UserAvatar(): JSX.Element {
 
   const getLoggedUserInitial = (): string | undefined => {
     return loggedUser?.fullName?.charAt(0);
+  };
+
+  const logout = () => {
+    resetLoggedUser();
+    history.push('/');
   };
 
   return (
@@ -76,7 +84,7 @@ export default function UserAvatar(): JSX.Element {
           <MenuItem>
             <Avatar /> Mi cuenta
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={() => logout()}>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
