@@ -2,8 +2,9 @@ import {render} from "@testing-library/react";
 import MainModule from "./MainModule";
 import {Router} from "react-router";
 import {createBrowserHistory} from "history";
+import {useLoggedUser} from "../../api/user/UserHooks";
 
-
+jest.mock('../../api/user/UserHooks');
 describe('MainModule', () => {
 
     const history = createBrowserHistory();
@@ -16,8 +17,12 @@ describe('MainModule', () => {
         );
     };
 
-    test.skip('should render help page and header', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+    })
+
+    test('should load logged user data', () => {
         renderComponent();
-        expect(history.location.pathname).toBe('/main/helps');
+        expect(useLoggedUser).toHaveBeenCalled();
     })
 });

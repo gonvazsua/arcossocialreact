@@ -14,7 +14,7 @@ export const handlers = [
     rest.get(`${endpointBaseUrl}/users`, (req, res, ctx) => {
         const userCode = req.url.searchParams.get('userCode')
         if(userCode === 'SSO018') {
-            return res(ctx.json([mockData.loggedUser]));
+            return res(ctx.json(mockData.loggedUser));
         }
         return res(ctx.status(200));
     }),

@@ -8,7 +8,7 @@ export const mockData = {
             "entityCode": "SSO",
             "isAdmin": false,
             "isActive": true,
-            "creationDate": "2021-03-07T12:57:49.587Z"
+            "creationDate": new Date("2021-03-07T12:57:49.587Z")
         }
     ],
 }

@@ -1,12 +1,22 @@
 import {render, screen} from "@testing-library/react";
 import UserAvatar from "./UserAvatar";
 import userEvent from "@testing-library/user-event";
+import {RecoilRoot} from "recoil";
+import {loggedUserAtom} from "../../api/user/UserAtom";
+import {mockData} from "../../mocks/mockData";
+import {User} from "../../api/user/user";
 
 describe('UserAvatar', function () {
 
+    const loggedUser: User = mockData.loggedUser[0];
+
     const renderComponent = () => {
         return render(
-            <UserAvatar />
+            <RecoilRoot initializeState={(snap) => {
+                snap.set(loggedUserAtom, loggedUser)
+            }}>
+                <UserAvatar />
+            </RecoilRoot>
         );
     };
 
@@ -24,10 +34,8 @@ describe('UserAvatar', function () {
         expect(logoutLink).toBeInTheDocument();
     });
 
-    test.skip('should show initial of user in the avatar', () => {
-        localStorage.clear();
+    test('should render the inital letter of the logged user name', () => {
         renderComponent();
-        //expect(history.location.pathname).toBe('/');
     });
 
 });
