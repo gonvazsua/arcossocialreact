@@ -1,10 +1,23 @@
 import {Box, Tooltip, Typography} from "@mui/material";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import {
-    Link
+    Link, useRouteMatch
 } from "react-router-dom";
+import {useResetRecoilState} from "recoil";
+import {loggedUserAtom} from "../../api/user/UserAtom";
+import {useHistory} from "react-router";
 
 export default function MenuBar(): JSX.Element {
+
+    const resetLoggedUser = useResetRecoilState(loggedUserAtom);
+    const history = useHistory();
+
+    const handleLogout = () => {
+        resetLoggedUser();
+        localStorage.clear();
+        history.push('/');
+    };
+
     return (
         <div>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -18,7 +31,7 @@ export default function MenuBar(): JSX.Element {
                         Beneficiarios
                     </Typography>
                 </Link>
-                <UserAvatar />
+                <UserAvatar logoutHandler={handleLogout} />
             </Box>
         </div>
     );

@@ -7,7 +7,7 @@ import {useLoggedUser} from "../../api/user/UserHooks";
 
 export default function MainModule() {
 
-    const { path } = useRouteMatch();
+    const { path, url } = useRouteMatch();
     useLoggedUser();
 
     return (
@@ -16,6 +16,9 @@ export default function MainModule() {
             <Switch>
                 <Route path={`${path}/helps`}>
                     <HelpsPage />
+                </Route>
+                <Route exact path={'/main'}>
+                    <Redirect to={`${url}/helps`} />
                 </Route>
             </Switch>
         </div>

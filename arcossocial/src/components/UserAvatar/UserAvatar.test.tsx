@@ -11,20 +11,9 @@ import {createBrowserHistory} from "history";
 describe('UserAvatar', function () {
 
     const logoutHandler = jest.fn();
-    const myAccountHandler = jest.fn();
 
     const loggedUser: User = mockData.loggedUser[0];
     const history = createBrowserHistory();
-
-    const renderComponent = () => {
-        return render(
-            <RecoilRoot initializeState={(snap) => {
-                snap.set(loggedUserAtom, loggedUser)
-            }}>
-                <UserAvatar logoutHandler={logoutHandler} myAccountHandler={myAccountHandler} />
-            </RecoilRoot>
-        );
-    };
 
     const renderComponentWithRouter = () => {
         return render(
@@ -32,14 +21,14 @@ describe('UserAvatar', function () {
                 snap.set(loggedUserAtom, loggedUser)
             }}>
                 <Router history={history}>
-                    <UserAvatar logoutHandler={logoutHandler} myAccountHandler={myAccountHandler} />
+                    <UserAvatar logoutHandler={logoutHandler} />
                 </Router>
             </RecoilRoot>
         );
     };
 
     test('should render menu when clicking on the first letter of the user name button', () => {
-        renderComponent();
+        renderComponentWithRouter();
         const accountButton = screen.getByRole('button', {name: 'Mi cuenta'});
         expect(accountButton).toBeInTheDocument();
 
@@ -53,7 +42,7 @@ describe('UserAvatar', function () {
     });
 
     test('should render the inital letter of the logged user name', () => {
-        renderComponent();
+        renderComponentWithRouter();
         const expectedInitial = mockData.loggedUser[0].fullName.charAt(0);
         const profileButton = screen.getByRole('button', {
             name: /mi cuenta/i
@@ -73,7 +62,7 @@ describe('UserAvatar', function () {
         expect(logoutHandler).toHaveBeenCalled();
     });
 
-    test('should call to my account handler when clicking on my account button', async () => {
+    test('should redirect to profile when clicking on My Account button', async () => {
         renderComponentWithRouter();
 
         const accountButton = screen.getByRole('button', {name: 'Mi cuenta'});
@@ -82,7 +71,7 @@ describe('UserAvatar', function () {
         const myAccountLink = screen.getByRole('menuitem', {name: 'Mi cuenta'});
         userEvent.click(myAccountLink);
 
-        expect(myAccountHandler).toHaveBeenCalled();
+        expect(history.location.pathname).toContain('profile');
     });
 
 });

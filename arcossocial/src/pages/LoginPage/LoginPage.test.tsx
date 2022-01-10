@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import {Router} from "react-router";
 import { createBrowserHistory } from 'history';
 import React from "react";
+import {mockData} from "../../mocks/mockData";
 
 describe('LoginPage', () => {
 
@@ -42,7 +43,7 @@ describe('LoginPage', () => {
         renderComponent();
 
         const usernameInput = screen.getByRole('textbox', {name:'Usuario'});
-        userEvent.type(usernameInput, 'test');
+        userEvent.type(usernameInput, mockData.loggedUser[0].userCode);
         const passwordInput = screen.getByRole('textbox', {name:'Contraseña'});
         userEvent.type(passwordInput, 'test');
 

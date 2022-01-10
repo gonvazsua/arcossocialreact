@@ -3,16 +3,17 @@ import {useState} from "react";
 import Logout from '@mui/icons-material/Logout';
 import {useRecoilValue, useResetRecoilState} from "recoil";
 import {loggedUserAtom} from "../../api/user/UserAtom";
-import {useHistory} from "react-router";
+import {
+  Link
+} from "react-router-dom";
 
 export interface UserAvatarProps {
-  logoutHandler: () => void,
-  myAccountHandler: () => void
+  logoutHandler: () => void
 }
 
 export default function UserAvatar(props: UserAvatarProps): JSX.Element {
 
-  const { logoutHandler, myAccountHandler } = props;
+  const { logoutHandler } = props;
   const [anchorEl, setAnchorEl] = useState(null);
   const loggedUser = useRecoilValue(loggedUserAtom);
   const open = Boolean(anchorEl);
@@ -80,15 +81,17 @@ export default function UserAvatar(props: UserAvatarProps): JSX.Element {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <MenuItem onClick={myAccountHandler}>
-            <Avatar /> Mi cuenta
-          </MenuItem>
-          <MenuItem onClick={logoutHandler}>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            Desconectar
-          </MenuItem>
+            <Link to="/main/profile">
+              <MenuItem>
+                  <Avatar /> Mi cuenta
+              </MenuItem>
+            </Link>
+            <MenuItem onClick={logoutHandler}>
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                Desconectar
+            </MenuItem>
         </Menu>
       </div>
   );

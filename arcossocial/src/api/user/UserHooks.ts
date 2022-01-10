@@ -7,13 +7,15 @@ import {LocalStorageKey} from "../../util/localStorageKey";
 export const useLoggedUser = () => {
     const [loggedUser, setLoggedUser] = useRecoilState(loggedUserAtom);
 
-    useEffect(() => {
-        const loggedUserCode = localStorage.getItem(LocalStorageKey.USER_CODE);
-        if(loggedUserCode) {
-            getUserByCode(loggedUserCode)
-                .then(user => setLoggedUser(user));
-        }
-    });
+    if(loggedUser) {
+        return;
+    }
+
+    const loggedUserCode = localStorage.getItem(LocalStorageKey.USER_CODE);
+    if(loggedUserCode) {
+        getUserByCode(loggedUserCode)
+            .then(user => setLoggedUser(user));
+    }
 
     return loggedUser;
 };
