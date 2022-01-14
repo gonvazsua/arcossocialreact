@@ -1,3 +1,9 @@
+import {Grid} from "@mui/material";
+
 export default function HelpsPage(): JSX.Element {
-    return <div>Helps page</div>;
+    return (
+        <Grid container spacing={2}>
+
+        </Grid>
+    );
 };

@@ -1,10 +1,19 @@
-import {Alert, AlertTitle, Snackbar, TextField} from "@mui/material";
+import {
+    Alert,Box, Button,
+    Card, CardActions,
+    CardContent, Checkbox,
+    FormControlLabel,
+    Grid,
+    Snackbar,
+    TextField
+} from "@mui/material";
 import {useState} from "react";
-import FormButton from "../../components/FormButton/FormButton";
 import {AxiosResponse} from "axios";
 import {executeLogin, LoginResponse} from "../../api/login/login";
 import {Redirect, useHistory} from "react-router";
 import {LocalStorageKey} from "../../util/localStorageKey";
+import Logo from '../../images/ArcosSocial_Color.svg';
+import {AccountCircle, Lock} from "@mui/icons-material";
 
 export default function LoginPage (): JSX.Element {
 
@@ -50,16 +59,78 @@ export default function LoginPage (): JSX.Element {
     
     const getLoginPage = () => {
         return (
-            <div>
-                <TextField id="username" label="Usuario" value={username} variant="outlined" onChange={(event) => handleChangeUsername(event.target.value)}/>
-                <TextField id="password" label="Contraseña" value={password} variant="outlined" onChange={(event) => handleChangePassword(event.target.value)}/>
-                <FormButton disabled={loginButtonDisabled} onClickFormButton={() => {handleClickLogin()}} displayText={'LOGIN'} />
+            <Grid container spacing={2}>
+                <Grid item xs={3} md={3} xl={3} />
+                <Grid item xs={6} md={6} xl={6}>
+                    <Card variant="outlined">
+                        <CardContent>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} md={12} xl={12} textAlign={'center'}>
+                                    <img src={Logo} width={200} alt={'Arcos social'} />
+                                </Grid>
+                                <Grid item xs={12} md={2} xl={2} />
+                                <Grid item xs={12} md={8} xl={8}>
+                                    <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                                        <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                                        <TextField
+                                            id="username"
+                                            label="Usuario"
+                                            value={username}
+                                            variant="standard"
+                                            onChange={(event) => handleChangeUsername(event.target.value)}
+                                            fullWidth
+                                        />
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={12} md={2} xl={2} />
+                                <Grid item xs={12} md={2} xl={2} />
+                                <Grid item xs={12} md={8} xl={8}>
+                                    <Box sx={{ display: 'flex', alignItems: 'flex-end', width: '100%' }} >
+                                        <Lock sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                                        <TextField
+                                            id="password"
+                                            label="Contraseña"
+                                            value={password}
+                                            variant="standard"
+                                            onChange={(event) => handleChangePassword(event.target.value)}
+                                            fullWidth
+                                        />
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={12} md={2} xl={2} />
+                            </Grid>
+                        </CardContent>
+                        <CardActions>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} md={2} xl={2} />
+                                <Grid item xs={12} md={4} xl={4} alignContent={'start'}>
+                                    <FormControlLabel
+                                        control={ <Checkbox defaultChecked /> }
+                                        label="Permanecer conectado"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={4} xl={4} textAlign={'right'}>
+                                    <Button
+                                        disabled={loginButtonDisabled}
+                                        onClick={() => {handleClickLogin()}}
+                                        variant={'contained'}
+                                        color={'primary'}
+                                    >
+                                        LOGIN
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={12} md={2} xl={2} />
+                            </Grid>
+                        </CardActions>
+                    </Card>
+                </Grid>
+                <Grid item xs={3} md={3} xl={3} />
                 <Snackbar open={loginIncorrect} autoHideDuration={1000}>
                     <Alert severity="error">
                         Usuario o contraseña incorrectos
                     </Alert>
                 </Snackbar>
-            </div>
+            </Grid>
         );
     };
 
